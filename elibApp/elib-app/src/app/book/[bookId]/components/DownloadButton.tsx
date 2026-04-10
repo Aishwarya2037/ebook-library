@@ -2,7 +2,7 @@
 
 const DownloadButton = ({ fileLink }: { fileLink: string }) => {
   const handleDownload = () => {
-    const fullLink = `http://localhost:3100/uploads/${fileLink}`;
+    const fullLink = `https://ebook-library-1.onrender.com/uploads/${fileLink}`;
     window.open(fullLink, "_blank");
   };
 
