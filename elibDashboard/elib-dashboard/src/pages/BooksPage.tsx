@@ -107,7 +107,7 @@ const BookPage = () => {
                   <td className="px-3 py-2 min-w-[70px] align-middle">
                     <img
                       alt={book.title}
-                      src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${book.coverImage}`}
+                      src={`https://ebook-library-1.onrender.com/uploads/${book.coverImage}`}
                       className="w-14 h-14 rounded-md object-cover"
                       loading="eager"
                     />
