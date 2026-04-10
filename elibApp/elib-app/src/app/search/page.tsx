@@ -25,7 +25,7 @@ const SearchPage = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `http://localhost:3100/api/books?search=${encodeURIComponent(query)}`,
+          `https://ebook-library-1.onrender.com/api/books?search=${encodeURIComponent(query)}`,
         );
         const data = await res.json();
         setBooks(Array.isArray(data.books) ? data.books : []); // ✅ use data.books
@@ -64,7 +64,7 @@ const SearchPage = () => {
             {/* <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4 flex gap-4"> */}
             {/* Image */}
             <img
-              src={`http://localhost:3100/uploads/${book.coverImage}`}
+              src={`https://ebook-library-1.onrender.com/uploads/${book.coverImage}`}
               alt={book.title}
               className="w-20 h-28 object-cover rounded-md"
             />
