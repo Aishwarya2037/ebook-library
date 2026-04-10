@@ -2,7 +2,7 @@ import { Book } from "@/src/types";
 import BookCard from "./BookCard";
 
 export const BookList = async () => {
-  const response = await fetch("http://localhost:3100/api/books?all=true");
+  const response = await fetch("https://ebook-library-1.onrender.com/api/books?all=true");
 
   if (!response.ok) {
     throw new Error("An error occurred while fetching the books");
