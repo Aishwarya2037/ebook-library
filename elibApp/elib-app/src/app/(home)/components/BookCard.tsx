@@ -6,7 +6,7 @@ const BookCard = ({ book }: { book: Book }) => {
     <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4 flex gap-4">
       {/* Image */}
       <img
-        src={`http://localhost:3100/uploads/${book.coverImage}`}
+        src={`https://ebook-library-1.onrender.com/uploads/${book.coverImage}`}
         alt={book.title}
         className="w-20 h-28 object-cover rounded-md"
       />
