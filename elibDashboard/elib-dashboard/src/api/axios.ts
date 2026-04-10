@@ -88,7 +88,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://ebook-library-1.onrender.com",
+  baseURL: "https://ebook-library-1.onrender.com/api",
 });
 
 api.interceptors.request.use((config) => {
