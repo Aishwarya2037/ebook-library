@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Suspense } from "react";
 import Banner from "./components/banner";
 import { BookList } from "./components/BookList";
