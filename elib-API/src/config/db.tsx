@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
+  console.log("MONGO URL exists:", !!process.env.MONGO_URL);
   try {
     await mongoose.connect(process.env.MONGO_URL as string);
     console.log("MongoDB connected");
