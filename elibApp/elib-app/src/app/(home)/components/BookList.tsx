@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Book } from "@/src/types";
 import BookCard from "./BookCard";
 
