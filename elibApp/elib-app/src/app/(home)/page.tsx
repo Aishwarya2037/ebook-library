@@ -28,7 +28,7 @@ export default async function Home() {
 
   try {
     const response = await fetch(
-      "https://ebook-library-1.onrender.com/api/books?all=true",
+      "https://ebook-library-wbmv.onrender.com/api/books?all=true",
       {
         cache: "no-store",
       }
