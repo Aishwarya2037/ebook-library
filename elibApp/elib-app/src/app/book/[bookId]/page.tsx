@@ -18,7 +18,7 @@ const SingleBookPage = async ({ params }: PageProps) => {
 
   try {
     const response = await fetch(
-      `https://ebook-library-1.onrender.com/api/books/${bookId}`,
+      `https://ebook-library-wbmv.onrender.com/api/books/${bookId}`,
       {
         next: { revalidate: 60 },
       },
@@ -58,7 +58,7 @@ const SingleBookPage = async ({ params }: PageProps) => {
         {/* Right section */}
         <div className="md:w-1/2 flex items-center justify-center p-8">
           <img
-            src={`https://ebook-library-1.onrender.com/uploads/${book.coverImage}`}
+            src={`https://ebook-library-wbmv.onrender.com/uploads/${book.coverImage}`}
             alt={book.title}
             className="w-auto h-72 object-cover rounded-md"
           />
