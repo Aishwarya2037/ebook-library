@@ -40,11 +40,20 @@ export const createBook = async (req: Request, res: Response) => {
       message: "Book created successfully",
       book,
     });
-  } catch (error) {
-    console.error(error);
+    // } catch (error) {
+    //   console.error(error);
 
-    res.status(500).json({
-      message: "Failed to create book",
+    //   res.status(500).json({
+    //     message: "Failed to create book",
+    //   });
+    // }
+  } catch (error: any) {
+    console.error("CREATE BOOK ERROR:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      stack: error.stack,
     });
   }
 };
