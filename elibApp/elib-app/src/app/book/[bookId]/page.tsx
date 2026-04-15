@@ -44,6 +44,9 @@ const SingleBookPage = async ({ params }: PageProps) => {
     return <div>Book not found</div>;
   }
 
+  console.log("BOOK DATA:", book);
+  console.log("COVER IMAGE:", book.coverImage);
+
   return (
     <div className="pt-20 h-auto flex items-start justify-center bg-gray-50 p-6">
       <div className="max-w-3xl w-full bg-white shadow-lg rounded-lg flex flex-col md:flex-row overflow-hidden">
