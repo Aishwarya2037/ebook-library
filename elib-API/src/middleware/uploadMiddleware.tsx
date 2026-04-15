@@ -39,8 +39,13 @@ import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import cloudinary from "../config/cloudinary.js";
 
+cloudinary.uploader
+  .upload("https://res.cloudinary.com/demo/image/upload/sample.jpg")
+  .then((res) => console.log("UPLOAD TEST OK:", res.secure_url))
+  .catch((err) => console.error("UPLOAD TEST ERROR:", err));
+
 const storage = new CloudinaryStorage({
-  cloudinary,
+  cloudinary: cloudinary,
   params: async (req, file) => {
     return {
       folder: "ebook-library",
