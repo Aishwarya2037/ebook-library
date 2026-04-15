@@ -15,8 +15,11 @@ export const createBook = async (req: Request, res: Response) => {
       [fieldname: string]: Express.Multer.File[];
     };
 
-    const coverImage = files.coverImage?.[0]?.filename;
-    const pdfFile = files.pdfFile?.[0]?.filename;
+    // const coverImage = files.coverImage?.[0]?.filename;
+    // const pdfFile = files.pdfFile?.[0]?.filename;
+
+    const coverImage = files.coverImage?.[0]?.path;
+    const pdfFile = files.pdfFile?.[0]?.path;
 
     if (!coverImage || !pdfFile) {
       return res.status(400).json({

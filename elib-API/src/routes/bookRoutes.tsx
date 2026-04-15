@@ -28,6 +28,7 @@ router.post(
 router.get("/", getBooks);
 // get by id
 router.get("/:id", getBookById);
+
 // update
 router.put(
   "/:id",
@@ -38,6 +39,7 @@ router.put(
   ]),
   updateBook,
 );
+
 // delete
 router.delete("/:id", protect, deleteBook);
 
