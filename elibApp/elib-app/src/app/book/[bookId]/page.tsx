@@ -58,7 +58,7 @@ const SingleBookPage = async ({ params }: PageProps) => {
         {/* Right section */}
         <div className="md:w-1/2 flex items-center justify-center p-8">
           <img
-            src={`https://ebook-library-wbmv.onrender.com/uploads/${book.coverImage}`}
+            src={book.coverImage}
             alt={book.title}
             className="w-auto h-72 object-cover rounded-md"
           />

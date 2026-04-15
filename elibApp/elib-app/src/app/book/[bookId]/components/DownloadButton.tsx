@@ -2,8 +2,8 @@
 
 const DownloadButton = ({ fileLink }: { fileLink: string }) => {
   const handleDownload = () => {
-    const fullLink = `https://ebook-library-wbmv.onrender.com/uploads/${fileLink}`;
-    window.open(fullLink, "_blank");
+    // const fullLink = `https://ebook-library-wbmv.onrender.com/uploads/${fileLink}`;
+    window.open(fileLink, "_blank");
   };
 
   return (
