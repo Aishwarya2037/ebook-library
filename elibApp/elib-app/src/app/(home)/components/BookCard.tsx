@@ -7,6 +7,7 @@ const BookCard = ({ book }: { book: Book }) => {
       {/* Image */}
       <img
         src={book.coverImage}
+        // src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/uploads/${book.coverImage}`}
         alt={book.title}
         className="w-20 h-28 object-cover rounded-md"
       />
