@@ -42,7 +42,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="mt-28">
+    <main className="pt-32 sm:pt-24">
       <Banner />
 
       <div className="max-w-6xl mx-auto mt-6 px-4 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-8">
