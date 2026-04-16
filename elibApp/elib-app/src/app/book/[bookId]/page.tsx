@@ -46,6 +46,7 @@ const SingleBookPage = async ({ params }: PageProps) => {
 
   console.log("BOOK DATA:", book);
   console.log("COVER IMAGE:", book.coverImage);
+  console.log("PDF FILE:", book.pdfFile);
 
   return (
     <div className="pt-20 h-auto flex items-start justify-center bg-gray-50 p-6">
