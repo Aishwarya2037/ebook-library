@@ -16,7 +16,6 @@
 //   );
 // }
 
-
 export const dynamic = "force-dynamic";
 
 import Banner from "./components/banner";
@@ -31,7 +30,7 @@ export default async function Home() {
       "https://ebook-library-wbmv.onrender.com/api/books?all=true",
       {
         cache: "no-store",
-      }
+      },
     );
 
     if (response.ok) {
@@ -43,14 +42,12 @@ export default async function Home() {
   }
 
   return (
-    <main className="mt-20">
+    <main className="-mt-36">
       <Banner />
 
       <div className="max-w-6xl mx-auto mt-6 px-4 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-8">
         {books.length > 0 ? (
-          books.map((book) => (
-            <BookCard key={book._id} book={book} />
-          ))
+          books.map((book) => <BookCard key={book._id} book={book} />)
         ) : (
           <p>No books found</p>
         )}
