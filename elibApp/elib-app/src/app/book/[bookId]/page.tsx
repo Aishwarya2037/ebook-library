@@ -49,7 +49,7 @@ const SingleBookPage = async ({ params }: PageProps) => {
   console.log("PDF FILE:", book.pdfFile);
 
   return (
-    <div className="pt-20 h-auto flex items-start justify-center bg-gray-50 p-6">
+    <div className="pt-32 sm:pt-24 h-auto flex items-start justify-center bg-gray-50 p-6">
       <div className="max-w-3xl w-full bg-white shadow-lg rounded-lg flex flex-col md:flex-row overflow-hidden">
         {/* Left section */}
         <div className="md:w-1/2 p-8 flex flex-col justify-center space-y-6">
