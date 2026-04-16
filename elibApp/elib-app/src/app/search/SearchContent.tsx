@@ -64,8 +64,7 @@ const SearchPage = () => {
             {/* <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition p-4 flex gap-4"> */}
             {/* Image */}
             <img
-              // src={`https://ebook-library-wbmv.onrender.com/uploads/${book.coverImage}`}
-              src={book.coverImage}
+              src={`https://ebook-library-wbmv.onrender.com/uploads/${book.coverImage}`}
               alt={book.title}
               className="w-20 h-28 object-cover rounded-md"
             />
