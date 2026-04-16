@@ -172,11 +172,11 @@ export const updateBook = async (req: Request, res: Response) => {
     };
 
     if (files?.coverImage?.[0]) {
-      updateData.coverImage = files.coverImage[0].filename;
+      updateData.coverImage = files.coverImage[0].path;
     }
 
     if (files?.pdfFile?.[0]) {
-      updateData.pdfFile = files.pdfFile[0].filename;
+      updateData.pdfFile = files.pdfFile[0].path;
     }
 
     const updatedBook = await Book.findByIdAndUpdate(id, updateData, {
