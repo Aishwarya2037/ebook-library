@@ -15,7 +15,7 @@ const Banner = () => {
         </div>
 
         {/* RIGHT IMAGE */}
-        <div className="hidden md:block">
+        <div className="hidden sm:block">
           <img
             src={"/images/homeBook-img.png"} // 👉 your image here
             alt="book"
