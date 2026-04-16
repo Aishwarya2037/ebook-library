@@ -63,7 +63,7 @@ const Navbar = ({ setIsOpen }: NavbarProps) => {
           onClick={() => setOpen(!open)}
         >
           <img
-            src="/public/images/profile.jpg"
+            src="/images/profile.jpg"
             alt="p"
             className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"
           />
