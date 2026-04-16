@@ -41,7 +41,7 @@ const SearchPage = () => {
   }, [query]);
 
   return (
-    <div className="p-8 max-w-5xl mx-auto mt-20 flex flex-col justify-center items-center">
+    <div className="p-8 max-w-5xl mx-auto pt-32 sm:pt-24 flex flex-col justify-center items-center">
       <h1 className="text-2xl font-bold mb-6">Search Results for "{query}"</h1>
 
       {loading && <p>Loading...</p>}
