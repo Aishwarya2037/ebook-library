@@ -57,13 +57,13 @@ export const loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     // find user
-    const user = await User.findOne({ email });
+    // const user = await User.findOne({ email });
 
-    if (!user) {
-      return res.status(400).json({
-        message: "Invalid email or password",
-      });
-    }
+    // if (!user) {
+    //   return res.status(400).json({
+    //     message: "Invalid email or password",
+    //   });
+    // }
 
     // ✅ ADMIN CHECK (IMPORTANT)
     const ADMIN_EMAIL = "admin@gmail.com";
