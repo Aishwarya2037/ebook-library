@@ -122,7 +122,7 @@ const LoginPage = () => {
                 </button>
 
                 {/* Signup Link */}
-                <p className="text-center text-sm text-gray-500">
+                {/* <p className="text-center text-sm text-gray-500">
                   Don&apos;t have an account?{" "}
                   <Link
                     to="/auth/register"
@@ -130,7 +130,7 @@ const LoginPage = () => {
                   >
                     Sign up
                   </Link>
-                </p>
+                </p> */}
               </div>
             </form>
 

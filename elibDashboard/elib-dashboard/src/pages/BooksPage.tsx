@@ -107,8 +107,8 @@ const BookPage = () => {
                   <td className="px-3 py-2 min-w-[70px] align-middle">
                     <img
                       alt={book.title}
-                      src={`https://ebook-library-wbmv.onrender.com/api/uploads/${book.coverImage}`}
-                      // src={`http://localhost:3100/uploads/${book.coverImage}`}
+                      // src={`https://ebook-library-wbmv.onrender.com/api/uploads/${book.coverImage}`}
+                      src={book.coverImage}
                       className="w-14 h-14 rounded-md object-cover"
                       loading="eager"
                     />

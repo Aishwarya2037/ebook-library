@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
+// import RegisterPage from "../pages/RegisterPage";
 import DashboardLayout from "../layouts/DashboardLayout";
 import HomePage from "../pages/HomePage";
 import BooksPage from "../pages/BooksPage";
-import Authlayout from "../layouts/Authlayout";
+// import Authlayout from "../layouts/Authlayout";
 import CreateBook from "../pages/CreateBook";
 import ViewBook from "../pages/ViewBook";
 import EditBook from "../pages/EditBook";
@@ -46,19 +46,23 @@ const router = createBrowserRouter([
     ],
   },
 
+  // {
+  //   path: "/auth",
+  //   element: <Authlayout />,
+  //   children: [
+  //     {
+  //       path: "login",
+  //       element: <LoginPage />,
+  //     },
+  //     {
+  //       path: "register",
+  //       element: <RegisterPage />,
+  //     },
+  //   ],
+  // },
   {
-    path: "/auth",
-    element: <Authlayout />,
-    children: [
-      {
-        path: "login",
-        element: <LoginPage />,
-      },
-      {
-        path: "register",
-        element: <RegisterPage />,
-      },
-    ],
+    path: "/login",
+    element: <LoginPage />,
   },
 ]);
 

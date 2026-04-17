@@ -6,11 +6,11 @@ type LoginPayload = {
   password: string;
 };
 
-type RegisterPayload = {
-  name: string;
-  email: string;
-  password: string;
-};
+// type RegisterPayload = {
+//   name: string;
+//   email: string;
+//   password: string;
+// };
 
 export const useLogin = (navigate: (path: string) => void) => {
   return useMutation({
@@ -25,7 +25,7 @@ export const useLogin = (navigate: (path: string) => void) => {
       console.log("SUCCESS CALLBACK", data);
       localStorage.setItem("token", data.token);
 
-      navigate("/dashboard");
+      navigate("/");
     },
 
     onError: (error) => {
@@ -35,20 +35,20 @@ export const useLogin = (navigate: (path: string) => void) => {
   });
 };
 
-export const useRegister = (navigate: (path: string) => void) => {
-  return useMutation({
-    mutationFn: async (data: RegisterPayload) => {
-      const res = await api.post("/auth/register", data);
-      return res.data;
-    },
+// export const useRegister = (navigate: (path: string) => void) => {
+//   return useMutation({
+//     mutationFn: async (data: RegisterPayload) => {
+//       const res = await api.post("/auth/register", data);
+//       return res.data;
+//     },
 
-    onSuccess: (data) => {
-      localStorage.setItem("token", data.token);
-      navigate("/dashboard");
-    },
+//     onSuccess: (data) => {
+//       localStorage.setItem("token", data.token);
+//       navigate("/");
+//     },
 
-    onError: () => {
-      alert("User already exists with ths email");
-    },
-  });
-};
+//     onError: () => {
+//       alert("User already exists with this email");
+//     },
+//   });
+// };

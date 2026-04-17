@@ -85,7 +85,7 @@ const Navbar = ({ setIsOpen }: NavbarProps) => {
         {/* SUBMENU */}
         {open && (
           <div className="absolute right-0 mt-2 w-32 bg-white shadow-md rounded-md border border-gray-200">
-            <NavLink to="/auth/login">
+            <NavLink to="/login">
               <button
                 onClick={handleLogout}
                 className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
