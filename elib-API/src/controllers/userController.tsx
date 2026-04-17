@@ -69,7 +69,7 @@ export const loginUser = async (req: Request, res: Response) => {
     const ADMIN_EMAIL = "admin@gmail.com";
     const ADMIN_PASSWORD = "123456";
 
-    if (user.email !== ADMIN_EMAIL && user.password !== ADMIN_PASSWORD) {
+    if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
       return res.status(403).json({
         message: "Only admin can access dashboard",
       });
@@ -88,8 +88,8 @@ export const loginUser = async (req: Request, res: Response) => {
     const token = jwt.sign(
       // payload
       {
-        id: user._id,
-        email: user.email,
+        // id: user._id,
+        email: ADMIN_EMAIL,
       },
       // secret key
       process.env.JWT_SECRET as string,
