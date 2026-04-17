@@ -65,12 +65,12 @@ export const loginUser = async (req: Request, res: Response) => {
       });
     }
 
-    // ✅ ADMIN CHECK
-    const ADMIN_EMAIL = "admin@example.com";
+    // ✅ ADMIN CHECK (IMPORTANT)
+    const ADMIN_EMAIL = "admin@gmail.com";
 
     if (user.email !== ADMIN_EMAIL) {
       return res.status(403).json({
-        message: "Access denied. Only admin can login.",
+        message: "Only admin can access dashboard",
       });
     }
 
