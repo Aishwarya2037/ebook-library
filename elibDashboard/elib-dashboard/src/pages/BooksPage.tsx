@@ -5,8 +5,6 @@ import {
   faEdit,
   faTrash,
   faEye,
-  // faChevronLeft,
-  // faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 

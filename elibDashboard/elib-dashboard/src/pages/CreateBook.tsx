@@ -148,6 +148,7 @@ const CreateBook = () => {
 
             <button
               type="submit"
+              disabled={loading}
               className="px-5 py-2.5 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
             >
               Submit
