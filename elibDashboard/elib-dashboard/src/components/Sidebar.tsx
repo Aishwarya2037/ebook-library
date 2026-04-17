@@ -1,94 +1,3 @@
-// import { NavLink } from "react-router-dom";
-
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faHouse, faBook } from "@fortawesome/free-solid-svg-icons";
-
-// const Sidebar = () => {
-//   const linkClass = ({ isActive }: any) =>
-//     `flex items-center gap-3 px-6 py-3 cursor-pointer
-//      ${isActive ? "bg-gray-100" : "hover:bg-gray-100"}`;
-
-//   return (
-//     <div className="hidden md:block w-64 h-screen bg-white text-black fixed left-0 top-0 shadow-2xl shadow-geay-300">
-//       {/* LOGO */}
-// <NavLink to="/dashboard" className="flex items-center gap-2 mt-3 ml-3">
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     viewBox="0 0 64 64"
-//     width="40"
-//     height="40"
-//     fill="none"
-//   >
-//     <path
-//       d="M8 12C8 10.9 8.9 10 10 10H28C31.3 10 34 12.7 34 16V52C34 48.7 31.3 46 28 46H10C8.9 46 8 46.9 8 48V12Z"
-//       fill="#DA3D20"
-//     />
-//     <path
-//       d="M56 12C56 10.9 55.1 10 54 10H36C32.7 10 30 12.7 30 16V52C30 48.7 32.7 46 36 46H54C55.1 46 56 46.9 56 48V12Z"
-//       fill="#F8843F"
-//     />
-//   </svg>
-
-//   <span className="text-xl font-bold uppercase tracking-tight">
-//     e-Library
-//   </span>
-// </NavLink>
-
-//       {/* MENU */}
-//       <ul className="mt-6 space-y-1">
-//         {/* Dashboard */}
-//         <li>
-//           <NavLink to="/dashboard/home" className={linkClass}>
-//             <FontAwesomeIcon icon={faHouse} />
-//             Home
-//           </NavLink>
-//         </li>
-
-//         {/* Users */}
-//         <li>
-//           <NavLink to="/dashboard/books" className={linkClass}>
-//             <FontAwesomeIcon icon={faBook} />
-//             Books
-//           </NavLink>
-//         </li>
-
-//         {/* Projects with Submenu */}
-//         {/* <li>
-//           <div
-//             className="flex items-center justify-between px-6 py-3 cursor-pointer hover:bg-red-400"
-//             onClick={() => setProjectsOpen(!projectsOpen)}
-//           >
-//             <div className="flex items-center gap-3">
-//               <FontAwesomeIcon icon={faFolder} />
-//               Projects
-//             </div>
-//             <FontAwesomeIcon
-//               icon={faChevronDown}
-//               className={`transition-transform ${projectsOpen ? "rotate-180" : ""}`}
-//             />
-//           </div>
-//           {projectsOpen && (
-//             <ul className="bg-gray-300 text-black">
-//               <li>
-//                 <NavLink to="/projects/active" className="block px-12 py-2 hover:bg-red-300">
-//                   Active Projects
-//                 </NavLink>
-//               </li>
-//               <li>
-//                 <NavLink to="/projects/completed" className="block px-12 py-2 hover:bg-red-300">
-//                   Completed Projects
-//                 </NavLink>
-//               </li>
-//             </ul>
-//           )}
-//         </li> */}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Sidebar;
-
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faBook, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -131,7 +40,7 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         </button>
 
         {/* LOGO */}
-        <NavLink to="/dashboard" className="flex items-center gap-2 mt-3 ml-3">
+        <NavLink to="/" className="flex items-center gap-2 mt-3 ml-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 64 64"
@@ -157,14 +66,14 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
         {/* MENU */}
         <ul className="mt-6 space-y-1">
           <li>
-            <NavLink to="/dashboard/home" className={linkClass}>
+            <NavLink to="/home" className={linkClass}>
               <FontAwesomeIcon icon={faHouse} />
               Home
             </NavLink>
           </li>
 
           <li>
-            <NavLink to="/dashboard/books" className={linkClass}>
+            <NavLink to="/books" className={linkClass}>
               <FontAwesomeIcon icon={faBook} />
               Books
             </NavLink>

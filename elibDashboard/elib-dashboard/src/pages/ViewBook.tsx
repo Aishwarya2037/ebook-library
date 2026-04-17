@@ -19,16 +19,13 @@ const ViewBook = () => {
 
   return (
     <div className="max-w-sm md:max-w-2xl mx-auto p-6">
-      <Link
-        to="/dashboard/books"
-        className="text-blue-500 underline mb-4 inline-block"
-      >
+      <Link to="/books" className="text-blue-500 underline mb-4 inline-block">
         {"<"} back
       </Link>
 
       <div className="border rounded-xl shadow-md p-6 flex flex-col md:flex-row gap-4 md:gap-10">
         <img
-          src={`https://ebook-library-1.onrender.com/uploads/${book.coverImage}`}
+          src={`https://ebook-library-wbmv.onrender.com/uploads/${book.coverImage}`}
           alt={book.title}
           className="w-50 md:w-60 h-70 md:h-70 object-cover rounded-lg"
         />

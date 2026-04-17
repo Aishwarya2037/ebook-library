@@ -95,7 +95,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     if (token) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [token]);
 
@@ -199,7 +199,7 @@ const RegisterPage = () => {
                 <p className="text-center text-sm text-gray-500">
                   Already have an account?{" "}
                   <Link
-                    to="/login"
+                    to="/auth/login"
                     className="underline font-medium text-black"
                   >
                     Login

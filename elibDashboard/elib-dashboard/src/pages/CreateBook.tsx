@@ -30,7 +30,12 @@ const CreateBook = () => {
         formData.append("pdfFile", pdfFile);
       }
 
-      const res = await api.post("/books", formData);
+      // const res = await api.post("/books", formData);
+      const res = await api.post("/books", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       alert(res.data.message);
 
@@ -39,7 +44,7 @@ const CreateBook = () => {
       setAuthor("");
       setCoverImage(null);
       setPdfFile(null);
-      navigate("/dashboard/books");
+      navigate("/books");
     } catch (error) {
       console.error(error);
       alert("Failed to add book");

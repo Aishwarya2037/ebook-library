@@ -39,7 +39,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (token) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [token, navigate]);
 
@@ -125,7 +125,7 @@ const LoginPage = () => {
                 <p className="text-center text-sm text-gray-500">
                   Don&apos;t have an account?{" "}
                   <Link
-                    to="/register"
+                    to="/auth/register"
                     className="underline font-medium text-black"
                   >
                     Sign up

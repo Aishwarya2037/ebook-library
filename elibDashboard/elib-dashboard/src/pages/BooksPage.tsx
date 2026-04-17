@@ -56,7 +56,7 @@ const BookPage = () => {
 
         <div className="flex gap-3 items-center">
           <Link
-            to="/dashboard/books/create"
+            to="/books/create"
             className="h-10 bg-blue-600 text-white px-4 rounded-md hover:bg-blue-700 flex gap-1 items-center font-semibold"
           >
             <FontAwesomeIcon icon={faUserPlus} />
@@ -107,8 +107,8 @@ const BookPage = () => {
                   <td className="px-3 py-2 min-w-[70px] align-middle">
                     <img
                       alt={book.title}
-                      // src={`https://ebook-library.onrender.com/uploads/${book.coverImage}`}
-                      src={`http://localhost:3100/uploads/${book.coverImage}`}
+                      src={`https://ebook-library-wbmv.onrender.com/api/uploads/${book.coverImage}`}
+                      // src={`http://localhost:3100/uploads/${book.coverImage}`}
                       className="w-14 h-14 rounded-md object-cover"
                       loading="eager"
                     />
@@ -122,7 +122,7 @@ const BookPage = () => {
                       {/* Edit */}
                       {/* <FontAwesomeIcon icon={faEdit} className="text-orange-400" /> */}
                       <Link
-                        to={`/dashboard/books/edit/${book._id}`}
+                        to={`/books/edit/${book._id}`}
                         className="text-orange-400"
                       >
                         <FontAwesomeIcon icon={faEdit} />
@@ -130,7 +130,7 @@ const BookPage = () => {
 
                       {/* View */}
                       <Link
-                        to={`/dashboard/books/${book._id}`}
+                        to={`/books/${book._id}`}
                         className="text-white px-3 py-1 rounded"
                       >
                         <FontAwesomeIcon

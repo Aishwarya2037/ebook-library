@@ -12,7 +12,7 @@ import ProtectedRoute from "../protected/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
-    path: "/dashboard",
+    path: "/",
     element: (
       <ProtectedRoute>
         <DashboardLayout />
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/",
+    path: "/auth",
     element: <Authlayout />,
     children: [
       {

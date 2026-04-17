@@ -66,7 +66,7 @@ const EditBook = () => {
       { id: id!, formData },
       {
         onSuccess: () => {
-          navigate("/dashboard/books");
+          navigate("/books");
         },
       },
     );
