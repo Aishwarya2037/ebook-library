@@ -5,51 +5,51 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 
 // REGISTER
-export const registerUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    // get form data
-    const { name, email, password } = req.body;
+// export const registerUser = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   try {
+//     // get form data
+//     const { name, email, password } = req.body;
 
-    if (!name || !email || !password) {
-      const error = createHttpError(400, "All fields are required");
+//     if (!name || !email || !password) {
+//       const error = createHttpError(400, "All fields are required");
 
-      return next(error);
-    }
+//       return next(error);
+//     }
 
-    // check existing user
-    const existingUser = await User.findOne({ email });
+//     // check existing user
+//     const existingUser = await User.findOne({ email });
 
-    // if email already found in DB (400- bad request)
-    if (existingUser) {
-      return res.status(400).json({
-        message: "User already exists with this email",
-      });
-    }
+//     // if email already found in DB (400- bad request)
+//     if (existingUser) {
+//       return res.status(400).json({
+//         message: "User already exists with this email",
+//       });
+//     }
 
-    // hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+//     // hash password
+//     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // create user
-    const user = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-    });
+//     // create user
+//     const user = await User.create({
+//       name,
+//       email,
+//       password: hashedPassword,
+//     });
 
-    res.status(201).json({
-      message: "User registered successfully",
-      // user,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Error while creating user.",
-    });
-  }
-};
+//     res.status(201).json({
+//       message: "User registered successfully",
+//       // user,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       message: "Error while creating user.",
+//     });
+//   }
+// };
 
 // LOGIN
 export const loginUser = async (req: Request, res: Response) => {
@@ -62,6 +62,15 @@ export const loginUser = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(400).json({
         message: "Invalid email or password",
+      });
+    }
+
+    // ✅ ADMIN CHECK
+    const ADMIN_EMAIL = "admin@example.com";
+
+    if (user.email !== ADMIN_EMAIL) {
+      return res.status(403).json({
+        message: "Access denied. Only admin can login.",
       });
     }
 
