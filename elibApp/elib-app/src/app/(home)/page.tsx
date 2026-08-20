@@ -27,7 +27,7 @@ export default async function Home() {
 
   try {
     const response = await fetch(
-      "https://ebook-library-wbmv.onrender.com/api/books?all=true",
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books?all=true`,
       {
         cache: "no-store",
       },
