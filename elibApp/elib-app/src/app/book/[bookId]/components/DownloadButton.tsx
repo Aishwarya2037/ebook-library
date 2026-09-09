@@ -106,11 +106,34 @@
 
 // export default DownloadButton;
 
+// "use client";
+
+// const DownloadButton = ({ bookId }: { bookId: string }) => {
+//   const handleReadBook = () => {
+//     const readUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/read/${bookId}`;
+
+//     console.log("PDF URL:", readUrl);
+
+//     window.open(readUrl, "_blank", "noopener,noreferrer");
+//   };
+
+//   return (
+//     <button
+//       onClick={handleReadBook}
+//       className="inline-block cursor-pointer px-5 py-2.5 rounded-lg bg-[#DA3D20] text-white font-semibold hover:bg-[#ca3217] transition"
+//     >
+//       Read Book
+//     </button>
+//   );
+// };
+
+// export default DownloadButton;
+
 "use client";
 
 const DownloadButton = ({ bookId }: { bookId: string }) => {
   const handleReadBook = () => {
-    const readUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/read/${bookId}`;
+    const readUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/books/read/${bookId}`;
 
     console.log("PDF URL:", readUrl);
 
