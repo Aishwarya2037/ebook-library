@@ -419,7 +419,7 @@ const SearchPage = () => {
 
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books?search=${encodeURIComponent(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/books?search=${encodeURIComponent(
             query.trim(),
           )}`,
           {

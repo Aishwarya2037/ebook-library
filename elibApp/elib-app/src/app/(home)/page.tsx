@@ -67,12 +67,11 @@ export default async function Home() {
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books?all=true`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/books?all=true`,
       {
         cache: "no-store",
       },
     );
-
     if (response.ok) {
       const data = await response.json();
       books = data.books || [];
