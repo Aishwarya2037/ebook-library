@@ -16,10 +16,50 @@
 //   );
 // }
 
+// export const dynamic = "force-dynamic";
+
+// import Banner from "./components/banner";
+// import BookCard from "./components/BookCard";
+// import { Book } from "@/src/types";
+
+// export default async function Home() {
+//   let books: Book[] = [];
+
+//   try {
+//     const response = await fetch(
+//       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books?all=true`,
+//       {
+//         cache: "no-store",
+//       },
+//     );
+
+//     if (response.ok) {
+//       const data = await response.json();
+//       books = data.books || [];
+//     }
+//   } catch (error) {
+//     console.error("Error fetching books:", error);
+//   }
+
+//   return (
+//     <main className="pt-32 sm:pt-24">
+//       <Banner />
+
+//       <div className="max-w-6xl mx-auto mt-6 px-4 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-8">
+//         {books.length > 0 ? (
+//           books.map((book) => <BookCard key={book._id} book={book} />)
+//         ) : (
+//           <p>No books found</p>
+//         )}
+//       </div>
+//     </main>
+//   );
+// }
+
 export const dynamic = "force-dynamic";
 
 import Banner from "./components/banner";
-import BookCard from "./components/BookCard";
+import Pagination from "./components/Pagination";
 import { Book } from "@/src/types";
 
 export default async function Home() {
@@ -45,9 +85,9 @@ export default async function Home() {
     <main className="pt-32 sm:pt-24">
       <Banner />
 
-      <div className="max-w-6xl mx-auto mt-6 px-4 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-8">
+      <div className="max-w-6xl mx-auto mt-6 px-4 mb-8">
         {books.length > 0 ? (
-          books.map((book) => <BookCard key={book._id} book={book} />)
+          <Pagination books={books} />
         ) : (
           <p>No books found</p>
         )}

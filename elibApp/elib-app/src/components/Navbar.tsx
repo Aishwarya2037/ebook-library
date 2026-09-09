@@ -92,7 +92,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 py-3">
+      <div className="max-w-6xl mx-auto px-4 py-3">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           {/* LEFT - LOGO */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
@@ -114,7 +114,7 @@ const Navbar = () => {
             </svg>
 
             <span className="text-lg sm:text-xl font-bold uppercase tracking-tight whitespace-nowrap">
-              e-Library
+              e-Book
             </span>
           </Link>
 

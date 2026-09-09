@@ -17,26 +17,25 @@ const SingleBookPage = async ({ params }: PageProps) => {
   let book: Book | null = null;
 
   try {
-    const response = await fetch(
-      `https://ebook-library-wbmv.onrender.com/api/books/${bookId}`,
-      {
-        next: { revalidate: 60 },
-      },
-    );
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+    if (!backendUrl) {
+      throw new Error("NEXT_PUBLIC_BACKEND_URL is not defined");
+    }
+
+    const response = await fetch(`${backendUrl}/api/books/${bookId}`, {
+      next: { revalidate: 60 },
+    });
+
     if (!response.ok) {
-      // throw new Error("Error fetching book");
-      // console.log("STATUS:", response.status);
-      // console.log("STATUS TEXT:", response.statusText);
       throw new Error(`Error fetching book: ${response.status}`);
     }
 
-    // book = await response.json();
     const data = await response.json();
     book = data.book;
-  } catch (err: any) {
+  } catch (err) {
     console.error("FETCH ERROR:", err);
     throw err;
-    // throw new Error("Error fetching book");
   }
 
   if (!book) {
@@ -56,7 +55,8 @@ const SingleBookPage = async ({ params }: PageProps) => {
           <h1 className="text-3xl font-bold text-gray-800">{book.title}</h1>
           <p className="text-xl text-gray-600">{book.author}</p>
           <p>{book.description}</p>
-          <DownloadButton fileLink={book.pdfFile} />
+          {/* <DownloadButton fileLink={book.pdfFile} /> */}
+          <DownloadButton bookId={book._id} />
         </div>
 
         {/* Right section */}
