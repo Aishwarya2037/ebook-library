@@ -23,6 +23,26 @@
 //   console.log(`Server running on port ${PORT}`);
 // });
 
+// import dotenv from "dotenv";
+// import path from "node:path";
+
+// dotenv.config({
+//   path: path.resolve(process.cwd(), ".env"),
+// });
+
+// import app from "./app.js";
+// import connectDB from "./config/db.js";
+
+// const PORT = Number(process.env.PORT) || 3100;
+
+// connectDB();
+
+// console.log("ENV CHECK:", process.env.CLOUDINARY_API_KEY);
+
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
+
 import dotenv from "dotenv";
 import path from "node:path";
 
@@ -35,10 +55,22 @@ import connectDB from "./config/db.js";
 
 const PORT = Number(process.env.PORT) || 3100;
 
-connectDB();
+const startServer = async () => {
+  try {
+    await connectDB();
 
-console.log("ENV CHECK:", process.env.CLOUDINARY_API_KEY);
+    console.log(
+      "Cloudinary API Key:",
+      process.env.CLOUDINARY_API_KEY ? "Loaded" : "Missing",
+    );
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();

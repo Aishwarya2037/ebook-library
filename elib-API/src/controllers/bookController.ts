@@ -1,80 +1,139 @@
 import type { Request, Response } from "express";
 import Book from "../models/bookModel.js";
-// import type { AuthRequest } from "../middleware/authMiddleware.js";
+import cloudinary from "../config/cloudinary.js";
+
+// Extract Cloudinary public ID from URL
+const getCloudinaryPublicId = (url: string, resourceType: "image" | "raw") => {
+  try {
+    const parsedUrl = new URL(url);
+    const parts = parsedUrl.pathname.split("/");
+
+    const uploadIndex = parts.indexOf("upload");
+
+    if (uploadIndex === -1) {
+      return null;
+    }
+
+    let publicIdParts = parts.slice(uploadIndex + 1);
+
+    // Remove Cloudinary version
+    if (publicIdParts[0] && /^v\d+$/.test(publicIdParts[0])) {
+      publicIdParts.shift();
+    }
+
+    let publicId = publicIdParts.join("/");
+
+    // For images, remove extension
+    if (resourceType === "image") {
+      publicId = publicId.replace(/\.[^/.]+$/, "");
+    }
+
+    return publicId;
+  } catch (error) {
+    console.error("PUBLIC ID EXTRACTION ERROR:", error);
+    return null;
+  }
+};
 
 // CREATE BOOK
+// export const createBook = async (req: Request, res: Response) => {
+//   try {
+//     const { title, description, author } = req.body;
+
+//     const files = req.files as {
+//       [fieldname: string]: Express.Multer.File[];
+//     };
+
+//     const coverImageFile = files?.coverImage?.[0];
+//     const pdfFileUpload = files?.pdfFile?.[0];
+
+//     if (!coverImageFile || !pdfFileUpload) {
+//       return res.status(400).json({
+//         message: "Both cover image and PDF are required",
+//       });
+//     }
+
+//     console.log("COVER URL:", coverImageFile.path);
+//     console.log("COVER FILENAME:", coverImageFile.filename);
+
+//     console.log("PDF URL:", pdfFileUpload.path);
+//     console.log("PDF FILENAME:", pdfFileUpload.filename);
+
+//     const book = await Book.create({
+//       title,
+//       description,
+//       author,
+
+//       coverImage: coverImageFile.path,
+//       pdfFile: pdfFileUpload.path,
+
+//       coverImagePublicId: coverImageFile.filename,
+//       pdfFilePublicId: pdfFileUpload.filename,
+//     });
+
+//     return res.status(201).json({
+//       message: "Book created successfully",
+//       book,
+//     });
+//   } catch (error: any) {
+//     console.error("CREATE BOOK ERROR:", error);
+
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
 export const createBook = async (req: Request, res: Response) => {
   try {
-    const { title, description, author } = req.body;
+    console.log("========== CREATE BOOK ==========");
+    console.log("BODY:", req.body);
 
-    // const img = req.file
-    //   ? `http://localhost:3100/uploads/${req.file.filename}`
-    //   : "";
+    const { title, description, author } = req.body;
 
     const files = req.files as {
       [fieldname: string]: Express.Multer.File[];
     };
 
-    // const coverImage = files.coverImage?.[0]?.filename;
-    // const pdfFile = files.pdfFile?.[0]?.filename;
+    const coverImageFile = files?.coverImage?.[0];
+    const pdfFileUpload = files?.pdfFile?.[0];
 
-    const coverImage = files.coverImage?.[0]?.path;
-    const pdfFile = files.pdfFile?.[0]?.path;
-
-    if (!coverImage || !pdfFile) {
+    if (!coverImageFile || !pdfFileUpload) {
       return res.status(400).json({
         message: "Both cover image and PDF are required",
       });
     }
+
+    console.log("COVER URL:", coverImageFile.path);
+    console.log("PDF URL:", pdfFileUpload.path);
+
     const book = await Book.create({
       title,
       description,
       author,
-      coverImage,
-      pdfFile,
-      // coverImage: `/src/public/uploads/${coverImage}`,
-      // pdfFile: `/src/public/uploads/${pdfFile}`,
+      coverImage: coverImageFile.path,
+      pdfFile: pdfFileUpload.path,
+      coverImagePublicId: coverImageFile.filename,
+      pdfFilePublicId: pdfFileUpload.filename,
     });
 
-    res.status(201).json({
+    console.log("BOOK SAVED TO MONGODB:", book);
+
+    return res.status(201).json({
       message: "Book created successfully",
       book,
     });
-    // } catch (error) {
-    //   console.error(error);
-
-    //   res.status(500).json({
-    //     message: "Failed to create book",
-    //   });
-    // }
   } catch (error: any) {
     console.error("CREATE BOOK ERROR:", error);
 
     return res.status(500).json({
       success: false,
       message: error.message,
-      stack: error.stack,
     });
   }
 };
 
-// GET ALL BOOKS without pagination
-// export const getBooks = async (req: Request, res: Response) => {
-//   try {
-//     // fetches all books
-//     const books = await Book.find();
-
-//     res.status(200).json({
-//       books,
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       message: "Failed to fetch books",
-//     });
-//   }
-// };
-
-//with pagination
+// GET BOOKS
 export const getBooks = async (req: Request, res: Response) => {
   try {
     const page = Number(req.query.page) || 1;
@@ -84,31 +143,32 @@ export const getBooks = async (req: Request, res: Response) => {
 
     const skip = (page - 1) * limit;
 
-    // search filter
-    let query = {};
+    let query: Record<string, any> = {};
 
     if (search.trim()) {
       query = {
-        title: { $regex: search, $options: "i" },
+        title: {
+          $regex: search,
+          $options: "i",
+        },
       };
     }
 
-    let books;
     const totalBooks = await Book.countDocuments(query);
 
-    // const books = await Book.find(query)
-    //   .skip(skip)
-    //   .limit(limit)
-    //   .sort({ createdAt: -1 });
+    let books;
 
     if (all) {
-      books = await Book.find(query); // fetch all books
+      books = await Book.find(query).sort({
+        createdAt: -1,
+      });
     } else {
-      const skip = (page - 1) * limit;
-      books = await Book.find(query).skip(skip).limit(limit);
+      books = await Book.find(query).skip(skip).limit(limit).sort({
+        createdAt: -1,
+      });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       books,
       currentPage: page,
       totalPages: Math.ceil(totalBooks / limit),
@@ -117,7 +177,7 @@ export const getBooks = async (req: Request, res: Response) => {
   } catch (error: any) {
     console.error("GET BOOKS ERROR:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to fetch books",
       error: error.message,
     });
@@ -137,67 +197,123 @@ export const getBookById = async (req: Request, res: Response) => {
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       book,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error("GET BOOK ERROR:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to fetch book",
+      error: error.message,
     });
   }
 };
 
-// put
+// UPDATE BOOK
 export const updateBook = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { title, author, description } = req.body;
 
-    const files = req.files as {
-      [fieldname: string]: Express.Multer.File[];
-    };
+    const existingBook = await Book.findById(id);
 
-    const updateData: {
-      title?: string;
-      author?: string;
-      description?: string;
-      coverImage?: string;
-      pdfFile?: string;
-    } = {
-      title,
-      author,
-      description,
-    };
-
-    if (files?.coverImage?.[0]) {
-      updateData.coverImage = files.coverImage[0].path;
-    }
-
-    if (files?.pdfFile?.[0]) {
-      updateData.pdfFile = files.pdfFile[0].path;
-    }
-
-    const updatedBook = await Book.findByIdAndUpdate(id, updateData, {
-      new: true,
-    });
-
-    if (!updatedBook) {
+    if (!existingBook) {
       return res.status(404).json({
         message: "Book not found",
       });
     }
 
-    res.status(200).json({
+    const files = req.files as {
+      [fieldname: string]: Express.Multer.File[];
+    };
+
+    const coverImageFile = files?.coverImage?.[0];
+    const pdfFileUpload = files?.pdfFile?.[0];
+
+    const updateData: any = {};
+
+    if (title !== undefined) {
+      updateData.title = title;
+    }
+
+    if (author !== undefined) {
+      updateData.author = author;
+    }
+
+    if (description !== undefined) {
+      updateData.description = description;
+    }
+
+    // New cover image
+    if (coverImageFile) {
+      if (existingBook.coverImage) {
+        const oldPublicId = getCloudinaryPublicId(
+          existingBook.coverImage,
+          "image",
+        );
+
+        console.log("OLD COVER PUBLIC ID:", oldPublicId);
+
+        if (oldPublicId) {
+          const result = await cloudinary.uploader.destroy(oldPublicId, {
+            resource_type: "image",
+          });
+
+          console.log("OLD COVER DELETE RESULT:", result);
+        }
+      }
+
+      updateData.coverImage = coverImageFile.path;
+
+      updateData.coverImagePublicId = getCloudinaryPublicId(
+        coverImageFile.path,
+        "image",
+      );
+    }
+
+    // New PDF
+    if (pdfFileUpload) {
+      if (existingBook.pdfFile) {
+        const oldPdfPublicId = getCloudinaryPublicId(
+          existingBook.pdfFile,
+          "raw",
+        );
+
+        console.log("OLD PDF PUBLIC ID:", oldPdfPublicId);
+
+        if (oldPdfPublicId) {
+          const result = await cloudinary.uploader.destroy(oldPdfPublicId, {
+            resource_type: "raw",
+          });
+
+          console.log("OLD PDF DELETE RESULT:", result);
+        }
+      }
+
+      updateData.pdfFile = pdfFileUpload.path;
+
+      updateData.pdfFilePublicId = getCloudinaryPublicId(
+        pdfFileUpload.path,
+        "raw",
+      );
+    }
+
+    const updatedBook = await Book.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    return res.status(200).json({
       message: "Book updated successfully",
       book: updatedBook,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error("UPDATE BOOK ERROR:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to update book",
+      error: error.message,
     });
   }
 };
@@ -207,22 +323,71 @@ export const deleteBook = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const deletedBook = await Book.findByIdAndDelete(id);
+    // Find book
+    const book = await Book.findById(id);
 
-    if (!deletedBook) {
+    if (!book) {
       return res.status(404).json({
         message: "Book not found",
       });
     }
 
-    res.status(200).json({
+    console.log("========== DELETE BOOK ==========");
+    console.log("Book ID:", id);
+    console.log("Cover Public ID:", book.coverImagePublicId);
+    console.log("PDF Public ID:", book.pdfFilePublicId);
+
+    // --------------------------------
+    // DELETE COVER IMAGE
+    // --------------------------------
+
+    if (book.coverImagePublicId) {
+      const coverResult = await cloudinary.uploader.destroy(
+        book.coverImagePublicId,
+        {
+          resource_type: "image",
+          type: "upload",
+          invalidate: true,
+        },
+      );
+
+      console.log("COVER DELETE RESULT:", coverResult);
+    }
+
+    // --------------------------------
+    // DELETE PDF
+    // --------------------------------
+
+    if (book.pdfFilePublicId) {
+      const pdfResult = await cloudinary.uploader.destroy(
+        book.pdfFilePublicId,
+        {
+          resource_type: "raw",
+          type: "upload",
+          invalidate: true,
+        },
+      );
+
+      console.log("PDF DELETE RESULT:", pdfResult);
+    }
+
+    // --------------------------------
+    // DELETE FROM MONGODB
+    // --------------------------------
+
+    await Book.findByIdAndDelete(id);
+
+    console.log("MongoDB book deleted");
+
+    return res.status(200).json({
       message: "Book deleted successfully",
     });
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error("DELETE BOOK ERROR:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to delete book",
+      error: error.message,
     });
   }
 };

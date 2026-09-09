@@ -40,20 +40,32 @@ const bookSchema = new mongoose.Schema<Book>(
       type: String,
       required: true,
     },
+
     author: {
       type: String,
       required: true,
     },
+
     description: {
       type: String,
     },
+
     coverImage: {
       type: String,
       required: true,
     },
+
+    coverImagePublicId: {
+      type: String,
+    },
+
     pdfFile: {
       type: String,
       required: true,
+    },
+
+    pdfFilePublicId: {
+      type: String,
     },
   },
   { timestamps: true },
