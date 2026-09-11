@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faBook, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type SidebarProps = {
   isOpen: boolean;
@@ -59,18 +59,18 @@ const Sidebar = ({ isOpen, setIsOpen }: SidebarProps) => {
           </svg>
 
           <span className="text-xl font-bold uppercase tracking-tight">
-            e-Library
+            E-Book
           </span>
         </NavLink>
 
         {/* MENU */}
         <ul className="mt-6 space-y-1">
-          <li>
+          {/* <li>
             <NavLink to="/home" className={linkClass}>
               <FontAwesomeIcon icon={faHouse} />
               Home
             </NavLink>
-          </li>
+          </li> */}
 
           <li>
             <NavLink to="/books" className={linkClass}>

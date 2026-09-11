@@ -129,21 +129,44 @@
 
 // export default DownloadButton;
 
+// "use client";
+
+// const DownloadButton = ({ bookId }: { bookId: string }) => {
+//   const handleReadBook = () => {
+//     const readUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/read/${bookId}`;
+
+//     console.log("PDF URL:", readUrl);
+
+//     window.open(readUrl, "_blank", "noopener,noreferrer");
+//   };
+
+//   return (
+//     <button
+//       onClick={handleReadBook}
+//       className="inline-block cursor-pointer px-5 py-2.5 rounded-lg bg-[#DA3D20] text-white font-semibold hover:bg-[#ca3217] transition"
+//     >
+//       Read Book
+//     </button>
+//   );
+// };
+
+// export default DownloadButton;
+
 "use client";
 
+import { useRouter } from "next/navigation";
+
 const DownloadButton = ({ bookId }: { bookId: string }) => {
+  const router = useRouter();
+
   const handleReadBook = () => {
-    const readUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/read/${bookId}`;
-
-    console.log("PDF URL:", readUrl);
-
-    window.open(readUrl, "_blank", "noopener,noreferrer");
+    router.push(`/reader/${bookId}`);
   };
 
   return (
     <button
       onClick={handleReadBook}
-      className="inline-block cursor-pointer px-5 py-2.5 rounded-lg bg-[#DA3D20] text-white font-semibold hover:bg-[#ca3217] transition"
+      className="w-full bg-[#DA3D20] text-white py-3 rounded-lg font-semibold"
     >
       Read Book
     </button>

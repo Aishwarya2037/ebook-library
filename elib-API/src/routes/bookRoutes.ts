@@ -307,6 +307,38 @@ const router = express.Router();
 router.get("/", getBooks);
 
 // Read PDF
+// router.get("/read/:id", async (req, res) => {
+//   try {
+//     const book = await Book.findById(req.params.id);
+
+//     if (!book || !book.pdfFile) {
+//       return res.status(404).json({
+//         success: false,
+//         message: "PDF not found",
+//       });
+//     }
+
+//     const response = await axios.get(book.pdfFile, {
+//       responseType: "stream",
+//     });
+
+//     res.setHeader("Content-Type", "application/pdf");
+//     res.setHeader(
+//       "Content-Disposition",
+//       `inline; filename="${book.title}.pdf"`,
+//     );
+
+//     response.data.pipe(res);
+//   } catch (error) {
+//     console.error("PDF READ ERROR:", error);
+
+//     return res.status(500).json({
+//       success: false,
+//       message: "Unable to open PDF",
+//     });
+//   }
+// });
+// Read PDF
 router.get("/read/:id", async (req, res) => {
   try {
     const book = await Book.findById(req.params.id);
@@ -319,7 +351,7 @@ router.get("/read/:id", async (req, res) => {
     }
 
     const response = await axios.get(book.pdfFile, {
-      responseType: "stream",
+      responseType: "arraybuffer",
     });
 
     res.setHeader("Content-Type", "application/pdf");
@@ -328,7 +360,9 @@ router.get("/read/:id", async (req, res) => {
       `inline; filename="${book.title}.pdf"`,
     );
 
-    response.data.pipe(res);
+    res.setHeader("Content-Length", response.data.length);
+
+    res.send(response.data);
   } catch (error) {
     console.error("PDF READ ERROR:", error);
 
