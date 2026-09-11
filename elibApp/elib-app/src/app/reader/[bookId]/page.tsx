@@ -1,13 +1,18 @@
-import PdfReader from "./PdfReader";
+"use client";
 
-type PageProps = {
-  params: Promise<{ bookId: string }>;
-};
+import dynamic from "next/dynamic";
 
-const ReaderPage = async ({ params }: PageProps) => {
-  const { bookId } = await params;
+const PdfReader = dynamic(() => import("./PdfReader"), {
+  ssr: false,
+  loading: () => (
+    <div className="min-h-screen flex items-center justify-center">
+      <p>Loading PDF reader...</p>
+    </div>
+  ),
+});
 
-  return <PdfReader bookId={bookId} />;
+const ReaderPage = () => {
+  return <PdfReader />;
 };
 
 export default ReaderPage;
