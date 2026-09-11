@@ -152,24 +152,45 @@
 
 // export default DownloadButton;
 
+// "use client";
+
+// import { useRouter } from "next/navigation";
+
+// const DownloadButton = ({ bookId }: { bookId: string }) => {
+//   const router = useRouter();
+
+//   const handleReadBook = () => {
+//     router.push(`/reader/${bookId}`);
+//   };
+
+//   return (
+//     <button
+//       onClick={handleReadBook}
+//       className="w-full bg-[#DA3D20] text-white py-3 rounded-lg font-semibold"
+//     >
+//       Read Book
+//     </button>
+//   );
+// };
+
+// export default DownloadButton;
+
 "use client";
 
-import { useRouter } from "next/navigation";
-
 const DownloadButton = ({ bookId }: { bookId: string }) => {
-  const router = useRouter();
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-  const handleReadBook = () => {
-    router.push(`/reader/${bookId}`);
-  };
+  const pdfUrl = `${backendUrl}/api/books/read/${bookId}`;
 
   return (
-    <button
-      onClick={handleReadBook}
-      className="w-full bg-[#DA3D20] text-white py-3 rounded-lg font-semibold"
+    <a
+      href={pdfUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-block px-5 py-3 bg-[#F8843F] text-white rounded-lg font-semibold"
     >
       Read Book
-    </button>
+    </a>
   );
 };
 
