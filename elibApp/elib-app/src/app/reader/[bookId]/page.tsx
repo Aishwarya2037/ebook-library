@@ -1,9 +1,7 @@
 import PdfReader from "./PdfReader";
 
 type PageProps = {
-  params: Promise<{
-    bookId: string;
-  }>;
+  params: Promise<{ bookId: string }>;
 };
 
 const ReaderPage = async ({ params }: PageProps) => {
