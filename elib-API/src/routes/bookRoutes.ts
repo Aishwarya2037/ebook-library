@@ -359,10 +359,10 @@ router.get("/read/:id", async (req, res) => {
       "Content-Disposition",
       `inline; filename="${book.title}.pdf"`,
     );
-
     res.setHeader("Content-Length", response.data.length);
+    res.setHeader("Cache-Control", "public, max-age=3600");
 
-    res.send(response.data);
+    return res.send(response.data);
   } catch (error) {
     console.error("PDF READ ERROR:", error);
 
