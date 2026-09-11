@@ -67,7 +67,7 @@ export default async function Home() {
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/books?all=true`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books?all=true`,
       {
         cache: "no-store",
       },

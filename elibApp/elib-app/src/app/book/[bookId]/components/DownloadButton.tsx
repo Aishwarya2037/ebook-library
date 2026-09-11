@@ -133,7 +133,7 @@
 
 const DownloadButton = ({ bookId }: { bookId: string }) => {
   const handleReadBook = () => {
-    const readUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/books/read/${bookId}`;
+    const readUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/books/read/${bookId}`;
 
     console.log("PDF URL:", readUrl);
 
