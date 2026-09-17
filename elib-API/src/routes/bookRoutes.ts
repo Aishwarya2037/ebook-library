@@ -307,38 +307,6 @@ const router = express.Router();
 router.get("/", getBooks);
 
 // Read PDF
-// router.get("/read/:id", async (req, res) => {
-//   try {
-//     const book = await Book.findById(req.params.id);
-
-//     if (!book || !book.pdfFile) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "PDF not found",
-//       });
-//     }
-
-//     const response = await axios.get(book.pdfFile, {
-//       responseType: "stream",
-//     });
-
-//     res.setHeader("Content-Type", "application/pdf");
-//     res.setHeader(
-//       "Content-Disposition",
-//       `inline; filename="${book.title}.pdf"`,
-//     );
-
-//     response.data.pipe(res);
-//   } catch (error) {
-//     console.error("PDF READ ERROR:", error);
-
-//     return res.status(500).json({
-//       success: false,
-//       message: "Unable to open PDF",
-//     });
-//   }
-// });
-// Read PDF
 router.get("/read/:id", async (req, res) => {
   try {
     const book = await Book.findById(req.params.id);
@@ -355,12 +323,21 @@ router.get("/read/:id", async (req, res) => {
     });
 
     res.setHeader("Content-Type", "application/pdf");
+
     res.setHeader(
       "Content-Disposition",
       `inline; filename="${book.title}.pdf"`,
     );
+
     res.setHeader("Content-Length", response.data.length);
-    res.setHeader("Cache-Control", "public, max-age=3600");
+
+    // Prevent browser/mobile from using old PDF
+    res.setHeader(
+      "Cache-Control",
+      "no-store, no-cache, must-revalidate, proxy-revalidate",
+    );
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
 
     return res.send(response.data);
   } catch (error) {

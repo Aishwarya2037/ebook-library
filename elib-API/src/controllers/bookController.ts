@@ -273,30 +273,59 @@ export const updateBook = async (req: Request, res: Response) => {
     }
 
     // New PDF
+    // if (pdfFileUpload) {
+    //   if (existingBook.pdfFile) {
+    //     const oldPdfPublicId = getCloudinaryPublicId(
+    //       existingBook.pdfFile,
+    //       "raw",
+    //     );
+
+    //     console.log("OLD PDF PUBLIC ID:", oldPdfPublicId);
+
+    //     if (oldPdfPublicId) {
+    //       const result = await cloudinary.uploader.destroy(oldPdfPublicId, {
+    //         resource_type: "raw",
+    //       });
+
+    //       console.log("OLD PDF DELETE RESULT:", result);
+    //     }
+    //   }
+
+    //   updateData.pdfFile = pdfFileUpload.path;
+
+    //   updateData.pdfFilePublicId = getCloudinaryPublicId(
+    //     pdfFileUpload.path,
+    //     "raw",
+    //   );
+    // }
+
+    // New PDF
+    // New PDF
     if (pdfFileUpload) {
-      if (existingBook.pdfFile) {
-        const oldPdfPublicId = getCloudinaryPublicId(
-          existingBook.pdfFile,
-          "raw",
+      console.log("========== NEW PDF UPDATE ==========");
+      console.log("NEW PDF URL:", pdfFileUpload.path);
+      console.log("NEW PDF PUBLIC ID:", pdfFileUpload.filename);
+      console.log("OLD PDF PUBLIC ID:", existingBook.pdfFilePublicId);
+
+      // Delete old PDF from Cloudinary
+      if (existingBook.pdfFilePublicId) {
+        const deleteResult = await cloudinary.uploader.destroy(
+          existingBook.pdfFilePublicId,
+          {
+            resource_type: "raw",
+            type: "upload",
+            invalidate: true,
+          },
         );
 
-        console.log("OLD PDF PUBLIC ID:", oldPdfPublicId);
-
-        if (oldPdfPublicId) {
-          const result = await cloudinary.uploader.destroy(oldPdfPublicId, {
-            resource_type: "raw",
-          });
-
-          console.log("OLD PDF DELETE RESULT:", result);
-        }
+        console.log("OLD PDF DELETE RESULT:", deleteResult);
       }
 
+      // Save new PDF information
       updateData.pdfFile = pdfFileUpload.path;
+      updateData.pdfFilePublicId = pdfFileUpload.filename;
 
-      updateData.pdfFilePublicId = getCloudinaryPublicId(
-        pdfFileUpload.path,
-        "raw",
-      );
+      console.log("NEW PDF SAVED FOR UPDATE:", updateData.pdfFile);
     }
 
     const updatedBook = await Book.findByIdAndUpdate(id, updateData, {
